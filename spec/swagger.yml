@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: Sourdough BPI
+  description: Sourdough Bread Programming Interface
+  version: 0.1.0
+servers:
+  - url: http://localhost:8000/
+paths:
+  /sourdough:
+    get:
+      summary: Given query paramaters, returns an auto-generated recipe in HTML.
+      parameters:
+        - name: starterGm
+          in: query
+          required: true
+          description: Recipe starter amount, in grams.
+          schema:
+            type : number
+            minimum: 0
+        - name: waterGm
+          in: query
+          required: true
+          description: Recipe water amount, in grams.
+          schema:
+            type : number
+            minimum: 0
+        - name: flourGm
+          in: query
+          required: true
+          description: Recipe flour amount, in grams.
+          schema:
+            type : number
+            minimum: 0
+        - name: starterOz
+          in: query
+          required: true
+          description: Actual starter amount, in ounces.
+          schema:
+            type : number
+            minimum: 0
+      responses:
+        '200':
+          description: An HTML page with the output recipe.
+          content:
+            text/html:
+              schema: 
+                type: string
+    post:
+      summary: Given a JSON payload, returns a JSON object representing an auto-generated recipe.
+      requestBody:
+        required: true
+        description: A JSON object with the input recipe.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeIn'
+      responses:
+        '200':
+          description: A JSON object with the output recipe.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeOut'
+
+components:
+  schemas:
+    RecipeIn:
+      type: object
+      properties:
+        starterGm:
+          type: number
+          minimum: 0
+          description: Recipe starter amount, in grams.
+        waterGm:
+          type: number
+          minimum: 0
+          description: Recipe water amount, in grams.
+        flourGm:
+          type: number
+          minimum: 0
+          description: Recipe flour amount, in grams.
+        starterOz:
+          type: number
+          minimum: 0
+          description: Actual starter amount, in ounces.
+    RecipeOut:
+      type: object
+      properties:
+        starterOz:
+          type: number
+          minimum: 0
+          description: Recipe starter amount, in ounces.
+        waterOz:
+          type: number
+          minimum: 0
+          description: Recipe water amount, in ounces.
+        flourOz:
+          type: number
+          minimum: 0
+          description: Actual flour amount, in ounces.
