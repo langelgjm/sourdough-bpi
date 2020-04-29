@@ -1,3 +1,5 @@
+:- module(sourdough, [sourdough/12]).
+
 :- multifile
         prolog:message//1.
 
